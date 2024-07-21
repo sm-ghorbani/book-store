@@ -1,5 +1,10 @@
 from django.db import connection
-from collections import namedtuple
+
+
+class RawObject:
+    def __init__(self, **kwargs):
+        for key, value in kwargs.items():
+            setattr(self, key, value)
 
 
 class BaseService:
@@ -26,8 +31,7 @@ class BaseService:
 
     @classmethod
     def _row_to_object(cls, row, column_names):
-        RowObject = namedtuple("RowObject", column_names)
-        return RowObject._make(row)
+        return RawObject(**dict(zip(column_names, row)))
 
     @classmethod
     def read_all(cls, **kwargs):
@@ -46,3 +50,15 @@ class BaseService:
         if row:
             return cls._row_to_object(row, column_names)
         return None
+
+    @classmethod
+    def like(cls, column, value):
+        cursor = connection.cursor()
+        sql = f"SELECT * FROM {cls.table_name} WHERE {column} ILIKE %s"
+        cursor.execute(sql, [value])
+        rows = cursor.fetchall()
+        if rows:
+            column_names = [desc[0] for desc in cursor.description]
+            cursor.close()
+            return [cls._row_to_object(row, column_names) for row in rows]
+        return []

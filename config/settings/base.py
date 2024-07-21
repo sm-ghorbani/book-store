@@ -1,4 +1,5 @@
 from pathlib import Path
+from datetime import timedelta
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
@@ -63,3 +64,10 @@ AUTH_COOKIE_PATH = "/"
 AUTH_COOKIE_SECURE = False
 AUTH_COOKIE_SAMESITE = "strict"
 AUTH_COOKIE_ACCESS_MAX_AGE = 60 * 60 * 24
+
+
+SIMPLE_JWT = {
+    "AUTH_HEADER_TYPES": ("JWT",),
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
+    "ACCESS_REFRESH_LIFETIME": timedelta(days=10),
+}
