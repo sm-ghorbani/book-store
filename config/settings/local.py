@@ -7,10 +7,10 @@ DEBUG = True
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": "bookstore",
-        "USER": "django",
+        "NAME": "book",
+        "USER": "book",
         "PASSWORD": "django",
         "HOST": "localhost",
-        "PORT": "5432",
+        "PORT": "",
     }
 }

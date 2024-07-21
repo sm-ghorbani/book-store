@@ -1,7 +1,6 @@
 from collections.abc import Iterable
 from functools import partial
 
-from django_filters import FilterSet
 from rest_framework.permissions import BasePermission
 from rest_framework.response import Response
 from rest_framework.pagination import BasePagination
@@ -15,7 +14,7 @@ class APILayerHandler:
         permissions: list[BasePermission] = [],
         validators: list[BaseValidator] = [],
         incoming_adapters: list[BaseAdapter] = [],
-        filter: FilterSet | None = None,
+        filter=None,
         outgoing_adapters: list[BaseAdapter] = [],
         pagination_class: BasePagination | None = None,
         status_code=200,
