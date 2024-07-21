@@ -16,7 +16,7 @@ class LoginUsernamePasswordValidator(BaseValidator):
         super().validate_request_data(**kwargs)
         username = kwargs.get("username")
         password = kwargs.get("password")
-        user = UserService.read_one(username=username)
+        user = UserService.read_one(username=("=", username))
         if user and check_password(password, user.password):
             self.validator_context.set("user", user)
         else:

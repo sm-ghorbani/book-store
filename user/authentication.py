@@ -12,7 +12,7 @@ class CustomJWTAuthentication(JWTAuthentication):
         except KeyError:
             raise InvalidToken(_("Token contained no recognizable user identification"))
 
-        user = UserService.read_one(id=user_id)
+        user = UserService.read_one(id=("=", user_id))
         if user is None:
             raise AuthenticationFailed(_("User not found"), code="user_not_found")
         return user
@@ -26,5 +26,5 @@ class CustomJWTAuthentication(JWTAuthentication):
             user, validated_token = self.get_user(validated_token), validated_token
             user.is_authenticated = True
             return user, validated_token
-        except Exception:
+        except Exception as e:
             return None

@@ -10,6 +10,15 @@ class CoreExceptionMapper(exceptions.ExceptionMapper):
         401: {
             "INVALID_CREDENTIALS": "Invalid Credentials",
         },
+        404: {
+            "USER_NOT_FOUND": "User not found",
+            "BOOK_NOT_FOUND": "Book not found",
+            "REVIEW_NOT_FOUND": "Review not found",
+        },
+        409: {
+            "BOOK_ALREADY_RATED_BY_USER": "Book already rated by user",
+            "BOOK_NOT_BEEN_RATED_BY_USER": "Book not been rated by user",
+        },
     }
 
 

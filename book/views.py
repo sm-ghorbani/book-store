@@ -16,7 +16,12 @@ class BookListView(BaseView):
     def get(self, request, **kwargs):
         genre = request.GET.get("genre")
         if genre:
-            books = BookService.like("genre", genre)
+            books = BookService.get_books_with_genre(
+                request.user.id,
+                genre,
+            )
         else:
-            books = BookService.read_all()
+            books = BookService.get_books_with_user_reviews(
+                request.user.id,
+            )
         return books
